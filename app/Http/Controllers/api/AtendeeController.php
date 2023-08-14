@@ -13,6 +13,11 @@ class AtendeeController extends Controller
 {
     use CanLoadRelationships;
     private array $relations =['user'];
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show','update']);
+        $this->authorizeResource(Atendee::class, 'attendee');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,10 +34,10 @@ class AtendeeController extends Controller
      */
     public function store(Request $request, Event $event)
     {
-        $attendee = $this->loadRelationships($event->attendees()->create([
-            'user_id'=> 1
+        $atendee = $this->loadRelationships($event->attendees()->create([
+            'user_id'=> $request->user()->id
         ]));
-        return new AtendeeResource($attendee);
+        return new AtendeeResource($atendee);
     }
 
     /**
@@ -40,7 +45,9 @@ class AtendeeController extends Controller
      */
     public function show(Event $event, Atendee $attendee)
     {
-        return new AtendeeResource($this->loadRelationships($attendee));
+        return new AtendeeResource(
+            $this->loadRelationships($attendee)
+        );
     }
 
     /**
@@ -54,7 +61,7 @@ class AtendeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $event, Atendee $attendee)
+    public function destroy(Event $event, Atendee $attendee)
     {
         $attendee->delete();
         return response(status:204);
