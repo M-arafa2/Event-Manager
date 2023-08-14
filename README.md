@@ -1,6 +1,7 @@
 # Event-Manager
  api built with Laravel to handle events
 ## routes
+
 list all events
 create new events
 update existing event
