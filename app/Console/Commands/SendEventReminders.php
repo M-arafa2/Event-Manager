@@ -33,7 +33,7 @@ class SendEventReminders extends Command
                 ->get();
         $eventCount = $events->count();
         $eventLabel = Str::plural('event', $eventCount);
-        $this->info("found ${eventCount} ${eventLabel}.");
+        $this->info("found {$eventCount} {$eventLabel}.");
         $events->each(
             fn ($event) =>$event->attendees->each(
                 fn ($attendee) => $attendee->user->notify(
