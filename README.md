@@ -20,7 +20,7 @@ include attendees.user will list event with attendees and their users.
 special attributes for attendees
 include user will list all attendees for an event 
 
-##implemented :
+## implemented :
 - relational db
 -populating db with faker and seeders
 -authentication with sanctum
